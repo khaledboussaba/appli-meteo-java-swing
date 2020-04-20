@@ -1,9 +1,6 @@
 package fr.dev.weather;
 
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -20,42 +17,27 @@ public class MainFrame extends JFrame {
         String forecastUrl = "https://api.darksky.net/forecast/" + apiKey + "/" + latitude + "," + longitude;
 
         System.out.println("Before request ...");
-        new ForecastWorker(forecastUrl).execute();
-        System.out.println("After request ...");
-    }
 
-    class ForecastWorker extends SwingWorker<String, Void> {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(forecastUrl).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
 
-        private String forecastUrl;
-        public ForecastWorker(String forecastUrl) {
-            this.forecastUrl = forecastUrl;
-        }
-
-        @Override
-        protected String doInBackground() throws Exception {
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(forecastUrl).build();
-            Call call = client.newCall(request);
-            try {
-                Response response = call.execute();
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    return response.body().string();
+                    System.out.println(response.body().string());
                 }
-            } catch (IOException e) {
-                System.err.println("ERROR : " + e);
             }
-            return null;
-        }
 
-        @Override
-        protected void done() {
-            try {
-                System.out.println(get()); // get() method return the return of doInBackGround methed
-            } catch (InterruptedException | ExecutionException e) {
-                System.err.println("ERROR : " + e);
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.err.println("ERROR : " + e.getMessage());
             }
-        }
 
+        });
+
+        System.out.println("After request ...");
     }
 
 }
