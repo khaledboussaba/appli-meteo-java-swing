@@ -14,7 +14,7 @@ public class Application {
                 mainFrame.setResizable(false);
                 mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 mainFrame.pack();
-//                mainFrame.setLocationRelativeTo(null);
+                mainFrame.setLocationRelativeTo(null);
                 mainFrame.setVisible(true);
             }
         });

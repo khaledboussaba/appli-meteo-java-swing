@@ -10,7 +10,15 @@ public class Alert {
     }
 
     public static void error(Component parentComponent, String message) {
-        JOptionPane.showMessageDialog(parentComponent, message, "Error", JOptionPane.ERROR_MESSAGE);
+        error(parentComponent, "Error", message);
+    }
+
+    public static void info(Component parentComponent, String title, String message) {
+        JOptionPane.showMessageDialog(parentComponent, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static void info(Component parentComponent, String message) {
+        info(parentComponent, "Information", message);
     }
 
 }
