@@ -3,6 +3,8 @@ package fr.dev.weather;
 import fr.dev.weather.utilities.Alert;
 import fr.dev.weather.utilities.Api;
 import okhttp3.*;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +27,12 @@ public class MainFrame extends JFrame {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    System.out.println(response.body().string());
+//                    System.out.println(response.body().string());
+                    String jsonData = response.body().string();
+                    JSONObject forecast = (JSONObject) JSONValue.parse(jsonData);
+                    System.out.println(forecast.get("timezone"));
+                    JSONObject currently = (JSONObject) forecast.get("currently");
+                    System.out.println(currently.get("temperature"));
                 } else {
                     Alert.error(MainFrame.this, "Oooops, an error was occured, try again please !");
                 }
