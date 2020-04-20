@@ -18,6 +18,7 @@ speed-measure-plugin*.json
 /.idea
 target/
 out/
+libs/
 .project
 .classpath
 .c9/
