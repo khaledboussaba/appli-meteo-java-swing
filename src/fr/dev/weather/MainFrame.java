@@ -20,33 +20,40 @@ public class MainFrame extends JFrame {
         String forecastUrl = "https://api.darksky.net/forecast/" + apiKey + "/" + latitude + "," + longitude;
 
         System.out.println("Before request ...");
-        new SwingWorker<String, Void>() {
-
-            @Override
-            protected String doInBackground() throws Exception {
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder().url(forecastUrl).build();
-                Call call = client.newCall(request);
-                try {
-                    Response response = call.execute();
-                    return response.body().string();
-                } catch (IOException e) {
-                    System.err.println("ERROR : " + e);
-                }
-                return null;
-            }
-
-            @Override
-            protected void done() {
-                try {
-                    System.out.println(get()); // get() method return the return of doInBackGround methed
-                } catch (InterruptedException | ExecutionException e) {
-                    System.err.println("ERROR : " + e);
-                }
-            }
-
-        }.execute();
+        new ForecastWorker(forecastUrl).execute();
         System.out.println("After request ...");
+    }
+
+    class ForecastWorker extends SwingWorker<String, Void> {
+
+        private String forecastUrl;
+        public ForecastWorker(String forecastUrl) {
+            this.forecastUrl = forecastUrl;
+        }
+
+        @Override
+        protected String doInBackground() throws Exception {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder().url(forecastUrl).build();
+            Call call = client.newCall(request);
+            try {
+                Response response = call.execute();
+                return response.body().string();
+            } catch (IOException e) {
+                System.err.println("ERROR : " + e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void done() {
+            try {
+                System.out.println(get()); // get() method return the return of doInBackGround methed
+            } catch (InterruptedException | ExecutionException e) {
+                System.err.println("ERROR : " + e);
+            }
+        }
+
     }
 
 }
