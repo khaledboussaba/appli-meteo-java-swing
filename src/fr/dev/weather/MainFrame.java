@@ -38,7 +38,9 @@ public class MainFrame extends JFrame {
             Call call = client.newCall(request);
             try {
                 Response response = call.execute();
-                return response.body().string();
+                if (response.isSuccessful()) {
+                    return response.body().string();
+                }
             } catch (IOException e) {
                 System.err.println("ERROR : " + e);
             }
