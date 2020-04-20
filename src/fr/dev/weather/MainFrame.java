@@ -1,4 +1,11 @@
 package fr.dev.weather;
 
-public class MainFrame {
+import javax.swing.JFrame;
+
+public class MainFrame extends JFrame {
+
+    public MainFrame(String title) {
+        super(title);
+    }
+
 }
