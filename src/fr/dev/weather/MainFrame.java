@@ -19,8 +19,27 @@ public class MainFrame extends JFrame {
 
     private CurrentWeather currentWeather;
 
+    private JLabel timeLabel;
+    private JLabel temperatureLabel;
+
     public MainFrame(String title) {
         super(title);
+
+        Container contentPane = getContentPane();
+        setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+
+        contentPane.setBackground(Color.decode("#8EA2C6"));
+
+        timeLabel = new JLabel("Time is 08:11 and temperature is :", SwingConstants.CENTER);
+        timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        temperatureLabel = new JLabel("<html>100&deg;</html>", SwingConstants.CENTER);
+        temperatureLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        temperatureLabel.setForeground(Color.WHITE);
+        temperatureLabel.setFont(new Font("San Francisco", Font.PLAIN, 160));
+
+        add(timeLabel);
+        add(temperatureLabel);
 
         double latitude = 37.8267;
         double longitude = -122.4233;
@@ -38,8 +57,6 @@ public class MainFrame extends JFrame {
                         String jsonData = body.string();
 
                         currentWeather = getCurrentWeatherDetails(jsonData);
-
-                        System.out.println(currentWeather.getFormattedTime());
 
                     } else {
                         Alert.error(MainFrame.this, GENERIC_ERROR_MESSAGE);
