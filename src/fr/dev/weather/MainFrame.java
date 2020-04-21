@@ -13,6 +13,9 @@ import java.io.IOException;
 
 public class MainFrame extends JFrame {
 
+    private static final String GENERIC_ERROR_MESSAGE = "Oooops, an error was occured, try again please !";
+    private static final String INTERNET_CONNECTIVITY_ERROR_MESSAGE = "Verify your internet connection please !";
+
     public MainFrame(String title) {
         super(title);
 
@@ -35,16 +38,16 @@ public class MainFrame extends JFrame {
                         JSONObject currently = (JSONObject) forecast.get("currently");
                         System.out.println(currently.get("temperature"));
                     } catch (ParseException e) {
-                        Alert.error(MainFrame.this, "Oooops, an error was occured, try again please !");
+                        Alert.error(MainFrame.this, GENERIC_ERROR_MESSAGE);
                     }
                 } else {
-                    Alert.error(MainFrame.this, "Oooops, an error was occured, try again please !");
+                    Alert.error(MainFrame.this, GENERIC_ERROR_MESSAGE);
                 }
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Alert.error(MainFrame.this, "Verify your internet connection please !");
+                Alert.error(MainFrame.this, INTERNET_CONNECTIVITY_ERROR_MESSAGE);
             }
 
         });
