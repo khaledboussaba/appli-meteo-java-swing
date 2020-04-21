@@ -1,5 +1,6 @@
 package fr.dev.weather;
 
+import fr.dev.weather.models.CurrentWeather;
 import fr.dev.weather.utilities.Alert;
 import fr.dev.weather.utilities.Api;
 import okhttp3.*;
@@ -10,9 +11,6 @@ import org.json.simple.parser.ParseException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class MainFrame extends JFrame {
 
@@ -40,25 +38,15 @@ public class MainFrame extends JFrame {
                         JSONObject forecast = (JSONObject) JSONValue.parseWithException(jsonData);
                         JSONObject currently = (JSONObject) forecast.get("currently");
 
-                        String timezone = (String) forecast.get("timezone");
-                        double temperature = Double.parseDouble(currently.get("temperature") + "");
-                        //UNIX Time
-                        long time = (long) currently.get("time");
-                        double humidity = Double.parseDouble(currently.get("humidity") + "");
-                        double precipProbability = Double.parseDouble(currently.get("precipProbability") + "");
-                        String summary = (String) currently.get("summary");
-                        System.out.println("timezone : " + timezone);
-                        System.out.println("temperature : " + temperature);
-                        System.out.println("time : " + time);
-                        System.out.println("humidity : " + humidity);
-                        System.out.println("precipProbability :" + precipProbability);
-                        System.out.println("summary : " + summary);
+                        CurrentWeather currentWeather = new CurrentWeather();
+                        currentWeather.setTimezone((String) forecast.get("timezone"));
+                        currentWeather.setTime((long) currently.get("time"));
+                        currentWeather.setTemperature(Double.parseDouble(currently.get("temperature") + ""));
+                        currentWeather.setHumidity(Double.parseDouble(currently.get("humidity") + ""));
+                        currentWeather.setPrecipProbability(Double.parseDouble(currently.get("precipProbability") + ""));
+                        currentWeather.setSummary((String) currently.get("summary"));
 
-                        Date date = new Date(time * 1000L);
-                        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-                        formatter.setTimeZone(TimeZone.getTimeZone(timezone));
-                        String timeString = formatter.format(date);
-                        System.out.println("timeString : " + timeString);
+                        System.out.println(currentWeather.getFormattedTime());
 
                     } else {
                         Alert.error(MainFrame.this, GENERIC_ERROR_MESSAGE);
