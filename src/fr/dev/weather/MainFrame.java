@@ -19,6 +19,7 @@ public class MainFrame extends JFrame {
 
     private CurrentWeather currentWeather;
 
+    private JLabel locationLabel;
     private JLabel timeLabel;
     private JLabel temperatureLabel;
 
@@ -30,14 +31,23 @@ public class MainFrame extends JFrame {
 
         contentPane.setBackground(Color.decode("#8EA2C6"));
 
+
+        locationLabel = new JLabel("Paris, FR", SwingConstants.CENTER);
+        locationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        locationLabel.setForeground(Color.WHITE);
+        locationLabel.setFont(new Font("San Francisco", Font.PLAIN, 24));
+
         timeLabel = new JLabel("Time is 08:11 and temperature is :", SwingConstants.CENTER);
         timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        timeLabel.setForeground(new Color(255, 255, 255, 128));
+        timeLabel.setFont(new Font("San Francisco", Font.PLAIN, 18));
 
         temperatureLabel = new JLabel("<html>100&deg;</html>", SwingConstants.CENTER);
         temperatureLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         temperatureLabel.setForeground(Color.WHITE);
         temperatureLabel.setFont(new Font("San Francisco", Font.PLAIN, 160));
 
+        add(locationLabel);
         add(timeLabel);
         add(temperatureLabel);
 
