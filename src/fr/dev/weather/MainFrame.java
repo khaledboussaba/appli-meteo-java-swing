@@ -35,9 +35,20 @@ public class MainFrame extends JFrame {
                         String jsonData = body.string();
 
                         JSONObject forecast = (JSONObject) JSONValue.parseWithException(jsonData);
-                        System.out.println(forecast.get("timezone"));
                         JSONObject currently = (JSONObject) forecast.get("currently");
-                        System.out.println(currently.get("temperature"));
+
+                        String timezone = (String) forecast.get("timezone");
+                        double temperature = Double.parseDouble(currently.get("temperature") + "");
+                        long time = (long) currently.get("time");
+                        double humidity = Double.parseDouble(currently.get("humidity") + "");
+                        double precipProbability = Double.parseDouble(currently.get("precipProbability") + "");
+                        String summary = (String) currently.get("summary");
+                        System.out.println("timezone :" + timezone);
+                        System.out.println("temperature :" + temperature);
+                        System.out.println("time :" + time);
+                        System.out.println("humidity :" + humidity);
+                        System.out.println("precipProbability :" + precipProbability);
+                        System.out.println("summary :" + summary);
 
                     } else {
                         Alert.error(MainFrame.this, GENERIC_ERROR_MESSAGE);
