@@ -29,18 +29,20 @@ public class MainFrame extends JFrame {
         call.enqueue(new Callback() {
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String jsonData = response.body().string();
-                    try {
+            public void onResponse(Call call, Response response) {
+                try (ResponseBody body = response.body()) {
+                    if (response.isSuccessful()) {
+                        String jsonData = body.string();
+
                         JSONObject forecast = (JSONObject) JSONValue.parseWithException(jsonData);
                         System.out.println(forecast.get("timezone"));
                         JSONObject currently = (JSONObject) forecast.get("currently");
                         System.out.println(currently.get("temperature"));
-                    } catch (ParseException e) {
+
+                    } else {
                         Alert.error(MainFrame.this, GENERIC_ERROR_MESSAGE);
                     }
-                } else {
+                } catch (ParseException | IOException e) {
                     Alert.error(MainFrame.this, GENERIC_ERROR_MESSAGE);
                 }
             }
