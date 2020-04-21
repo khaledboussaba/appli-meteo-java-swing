@@ -17,6 +17,8 @@ public class MainFrame extends JFrame {
     private static final String GENERIC_ERROR_MESSAGE = "Oooops, an error was occured, try again please !";
     private static final String INTERNET_CONNECTIVITY_ERROR_MESSAGE = "Verify your internet connection please !";
 
+    private CurrentWeather currentWeather;
+
     public MainFrame(String title) {
         super(title);
 
@@ -35,16 +37,7 @@ public class MainFrame extends JFrame {
                     if (response.isSuccessful()) {
                         String jsonData = body.string();
 
-                        JSONObject forecast = (JSONObject) JSONValue.parseWithException(jsonData);
-                        JSONObject currently = (JSONObject) forecast.get("currently");
-
-                        CurrentWeather currentWeather = new CurrentWeather();
-                        currentWeather.setTimezone((String) forecast.get("timezone"));
-                        currentWeather.setTime((long) currently.get("time"));
-                        currentWeather.setTemperature(Double.parseDouble(currently.get("temperature") + ""));
-                        currentWeather.setHumidity(Double.parseDouble(currently.get("humidity") + ""));
-                        currentWeather.setPrecipProbability(Double.parseDouble(currently.get("precipProbability") + ""));
-                        currentWeather.setSummary((String) currently.get("summary"));
+                        currentWeather = getCurrentWeatherDetails(jsonData);
 
                         System.out.println(currentWeather.getFormattedTime());
 
@@ -63,6 +56,19 @@ public class MainFrame extends JFrame {
 
         });
 
+    }
+
+    private CurrentWeather getCurrentWeatherDetails(String jsonData) throws ParseException {
+        CurrentWeather currentWeather = new CurrentWeather();
+        JSONObject forecast = (JSONObject) JSONValue.parseWithException(jsonData);
+        JSONObject currently = (JSONObject) forecast.get("currently");
+        currentWeather.setTimezone((String) forecast.get("timezone"));
+        currentWeather.setTime((long) currently.get("time"));
+        currentWeather.setTemperature(Double.parseDouble(currently.get("temperature") + ""));
+        currentWeather.setHumidity(Double.parseDouble(currently.get("humidity") + ""));
+        currentWeather.setPrecipProbability(Double.parseDouble(currently.get("precipProbability") + ""));
+        currentWeather.setSummary((String) currently.get("summary"));
+        return currentWeather;
     }
 
     @Override
