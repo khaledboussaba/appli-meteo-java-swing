@@ -19,6 +19,10 @@ public class MainFrame extends JFrame {
 
     private CurrentWeather currentWeather;
 
+    private static final Color BLUE_COLOR = Color.decode("#8EA2C6");
+    private static final Color WHITE_COLOR = Color.WHITE;
+    private static final Font DEFAULT_FONT = new Font("Comic Sans MS", Font.PLAIN, 24);
+
     private JLabel locationLabel;
     private JLabel timeLabel;
     private JLabel temperatureLabel;
@@ -26,30 +30,32 @@ public class MainFrame extends JFrame {
     public MainFrame(String title) {
         super(title);
 
-        Container contentPane = getContentPane();
-        setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
-        contentPane.setBackground(Color.decode("#8EA2C6"));
-
+        JPanel contentPane = new JPanel();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
+        contentPane.setBackground(BLUE_COLOR);
 
         locationLabel = new JLabel("Paris, FR", SwingConstants.CENTER);
         locationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        locationLabel.setForeground(Color.WHITE);
-        locationLabel.setFont(new Font("San Francisco", Font.PLAIN, 24));
+        locationLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        locationLabel.setForeground(WHITE_COLOR);
+        locationLabel.setFont(DEFAULT_FONT);
 
         timeLabel = new JLabel("Time is 08:11 and temperature is :", SwingConstants.CENTER);
         timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         timeLabel.setForeground(new Color(255, 255, 255, 128));
-        timeLabel.setFont(new Font("San Francisco", Font.PLAIN, 18));
+        timeLabel.setFont(DEFAULT_FONT.deriveFont(18f));
 
         temperatureLabel = new JLabel("<html>100&deg;</html>", SwingConstants.CENTER);
         temperatureLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        temperatureLabel.setForeground(Color.WHITE);
-        temperatureLabel.setFont(new Font("San Francisco", Font.PLAIN, 160));
+        temperatureLabel.setForeground(WHITE_COLOR);
+        temperatureLabel.setFont(DEFAULT_FONT.deriveFont(160f));
 
-        add(locationLabel);
-        add(timeLabel);
-        add(temperatureLabel);
+        contentPane.add(locationLabel);
+        contentPane.add(timeLabel);
+        contentPane.add(temperatureLabel);
+
+        setContentPane(contentPane);
 
         double latitude = 37.8267;
         double longitude = -122.4233;
