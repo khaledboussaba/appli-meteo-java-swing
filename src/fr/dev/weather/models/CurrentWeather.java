@@ -29,16 +29,15 @@ public class CurrentWeather {
         Date date = new Date(getTime() * 1000L);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         formatter.setTimeZone(TimeZone.getTimeZone(getTimezone()));
-        String timeString = formatter.format(date);
-        return timeString;
+        return formatter.format(date);
     }
 
     public void setTime(long time) {
         this.time = time;
     }
 
-    public double getTemperature() {
-        return temperature;
+    public int getTemperature() {
+        return (int)Math.round(temperature);
     }
 
     public void setTemperature(double temperature) {
@@ -53,8 +52,8 @@ public class CurrentWeather {
         this.humidity = humidity;
     }
 
-    public double getPrecipProbability() {
-        return precipProbability;
+    public int getPrecipProbability() {
+        return (int)Math.round(precipProbability);
     }
 
     public void setPrecipProbability(double precipProbability) {
@@ -69,4 +68,7 @@ public class CurrentWeather {
         this.summary = summary;
     }
 
+    public String getCity() {
+        return getTimezone().split("/")[1];
+    }
 }

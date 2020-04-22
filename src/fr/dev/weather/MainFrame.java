@@ -17,8 +17,6 @@ public class MainFrame extends JFrame {
     private static final String GENERIC_ERROR_MESSAGE = "Oooops, an error was occured, try again please !";
     private static final String INTERNET_CONNECTIVITY_ERROR_MESSAGE = "Verify your internet connection please !";
 
-    private CurrentWeather currentWeather;
-
     private static final Color BLUE_COLOR = Color.decode("#8EA2C6");
     private static final Color WHITE_COLOR = Color.WHITE;
     private static final Color LIGHT_GRAY_COLOR = new Color(255, 255, 255, 128);
@@ -34,6 +32,8 @@ public class MainFrame extends JFrame {
     private JLabel precipValue;
     private JLabel summaryLabel;
 
+    private CurrentWeather currentWeather;
+
     public MainFrame(String title) {
         super(title);
 
@@ -42,7 +42,7 @@ public class MainFrame extends JFrame {
         contentPane.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
         contentPane.setBackground(BLUE_COLOR);
 
-        locationLabel = new JLabel("City, COUNTY CODE", SwingConstants.CENTER);
+        locationLabel = new JLabel("City ...", SwingConstants.CENTER);
         locationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         locationLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
         locationLabel.setForeground(WHITE_COLOR);
@@ -92,8 +92,8 @@ public class MainFrame extends JFrame {
 
         setContentPane(contentPane);
 
-        double latitude = 37.8267;
-        double longitude = -122.4233;
+        double latitude = 48.856613;
+        double longitude = 2.352222;
         String forecastUrl = Api.getForecastUrl(latitude, longitude);
 
         OkHttpClient client = new OkHttpClient();
@@ -108,6 +108,8 @@ public class MainFrame extends JFrame {
                         String jsonData = body.string();
 
                         currentWeather = getCurrentWeatherDetails(jsonData);
+
+                        EventQueue.invokeLater(() -> updateScreen());
 
                     } else {
                         Alert.error(MainFrame.this, GENERIC_ERROR_MESSAGE);
@@ -124,6 +126,15 @@ public class MainFrame extends JFrame {
 
         });
 
+    }
+
+    private void updateScreen() {
+        locationLabel.setText(currentWeather.getCity());
+        timeLabel.setText("Time is " + currentWeather.getFormattedTime() + " and temperature is :");
+        temperatureLabel.setText(currentWeather.getTemperature() + "°");
+        humidityValue.setText(currentWeather.getHumidity() + "");
+        precipValue.setText(currentWeather.getPrecipProbability() + "%");
+        summaryLabel.setText(currentWeather.getSummary());
     }
 
     private CurrentWeather getCurrentWeatherDetails(String jsonData) throws ParseException {
