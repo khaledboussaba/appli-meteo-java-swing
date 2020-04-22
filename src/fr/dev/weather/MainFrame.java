@@ -42,18 +42,18 @@ public class MainFrame extends JFrame {
         contentPane.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
         contentPane.setBackground(BLUE_COLOR);
 
-        locationLabel = new JLabel("Paris, FR", SwingConstants.CENTER);
+        locationLabel = new JLabel("City, COUNTY CODE", SwingConstants.CENTER);
         locationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         locationLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
         locationLabel.setForeground(WHITE_COLOR);
         locationLabel.setFont(DEFAULT_FONT);
 
-        timeLabel = new JLabel("Time is 08:11 and temperature is :", SwingConstants.CENTER);
+        timeLabel = new JLabel("...", SwingConstants.CENTER);
         timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         timeLabel.setForeground(LIGHT_GRAY_COLOR);
         timeLabel.setFont(DEFAULT_FONT.deriveFont(18f));
 
-        temperatureLabel = new JLabel("<html>100&deg;</html>", SwingConstants.CENTER);
+        temperatureLabel = new JLabel("--", SwingConstants.CENTER);
         temperatureLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         temperatureLabel.setForeground(WHITE_COLOR);
         temperatureLabel.setFont(DEFAULT_FONT.deriveFont(160f));
@@ -63,13 +63,13 @@ public class MainFrame extends JFrame {
         humidityLabel = new JLabel("Humidity".toUpperCase(), SwingConstants.CENTER);
         humidityLabel.setFont(DEFAULT_FONT.deriveFont(12f));
         humidityLabel.setForeground(LIGHT_GRAY_COLOR);
-        humidityValue = new JLabel("0.87", SwingConstants.CENTER);
+        humidityValue = new JLabel("--", SwingConstants.CENTER);
         humidityValue.setForeground(WHITE_COLOR);
         humidityValue.setFont(DEFAULT_FONT);
         precipLabel = new JLabel("Rain risk".toUpperCase(), SwingConstants.CENTER);
         precipLabel.setFont(DEFAULT_FONT.deriveFont(12f));
         precipLabel.setForeground(LIGHT_GRAY_COLOR);
-        precipValue = new JLabel("0%", SwingConstants.CENTER);
+        precipValue = new JLabel("--", SwingConstants.CENTER);
         precipValue.setForeground(WHITE_COLOR);
         precipValue.setFont(DEFAULT_FONT);
         otherInfosPanel.add(humidityLabel);
@@ -78,7 +78,7 @@ public class MainFrame extends JFrame {
         otherInfosPanel.add(precipValue);
         otherInfosPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        summaryLabel = new JLabel("Nuages Epars", SwingConstants.CENTER);
+        summaryLabel = new JLabel("recuperation of actual temperature ...", SwingConstants.CENTER);
         summaryLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         summaryLabel.setForeground(WHITE_COLOR);
         summaryLabel.setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0));
